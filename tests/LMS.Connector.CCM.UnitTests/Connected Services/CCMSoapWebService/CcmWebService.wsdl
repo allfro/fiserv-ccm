@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.opensolutions.com/CCM/CcmWebService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.opensolutions.com/CCM/CcmWebService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.opensolutions.com/CCM/CcmWebService">
+      <s:element name="GetPersonName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="partyId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPersonNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPersonNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CredentialsHeader" type="tns:CredentialsHeader" />
+      <s:complexType name="CredentialsHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Facility" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CultureId" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="Process">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProcessResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMessageString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMessageStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProcessMessageStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMessageNode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMessageNodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProcessMessageNodeResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMultiMessageNode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMultiMessageNodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProcessMultiMessageNodeResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPersonNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPersonName" />
+  </wsdl:message>
+  <wsdl:message name="GetPersonNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPersonNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPersonNameCredentialsHeader">
+    <wsdl:part name="CredentialsHeader" element="tns:CredentialsHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessSoapIn">
+    <wsdl:part name="parameters" element="tns:Process" />
+  </wsdl:message>
+  <wsdl:message name="ProcessSoapOut">
+    <wsdl:part name="parameters" element="tns:ProcessResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessCredentialsHeader">
+    <wsdl:part name="CredentialsHeader" element="tns:CredentialsHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageStringSoapIn">
+    <wsdl:part name="parameters" element="tns:ProcessMessageString" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageStringSoapOut">
+    <wsdl:part name="parameters" element="tns:ProcessMessageStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageStringCredentialsHeader">
+    <wsdl:part name="CredentialsHeader" element="tns:CredentialsHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageNodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ProcessMessageNode" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageNodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ProcessMessageNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageNodeCredentialsHeader">
+    <wsdl:part name="CredentialsHeader" element="tns:CredentialsHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMultiMessageNodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ProcessMultiMessageNode" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMultiMessageNodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ProcessMultiMessageNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMultiMessageNodeCredentialsHeader">
+    <wsdl:part name="CredentialsHeader" element="tns:CredentialsHeader" />
+  </wsdl:message>
+  <wsdl:portType name="CcmWebServiceSoap">
+    <wsdl:operation name="GetPersonName">
+      <wsdl:input message="tns:GetPersonNameSoapIn" />
+      <wsdl:output message="tns:GetPersonNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <wsdl:input message="tns:ProcessSoapIn" />
+      <wsdl:output message="tns:ProcessSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageString">
+      <wsdl:input message="tns:ProcessMessageStringSoapIn" />
+      <wsdl:output message="tns:ProcessMessageStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageNode">
+      <wsdl:input message="tns:ProcessMessageNodeSoapIn" />
+      <wsdl:output message="tns:ProcessMessageNodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMultiMessageNode">
+      <wsdl:input message="tns:ProcessMultiMessageNodeSoapIn" />
+      <wsdl:output message="tns:ProcessMultiMessageNodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CcmWebServiceSoap" type="tns:CcmWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPersonName">
+      <soap:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/GetPersonName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPersonNameCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <soap:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/Process" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ProcessCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageString">
+      <soap:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessMessageString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ProcessMessageStringCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageNode">
+      <soap:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessNativeMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ProcessMessageNodeCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMultiMessageNode">
+      <soap:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessNativeMultiMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ProcessMultiMessageNodeCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CcmWebServiceSoap12" type="tns:CcmWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPersonName">
+      <soap12:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/GetPersonName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetPersonNameCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <soap12:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/Process" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ProcessCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageString">
+      <soap12:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessMessageString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ProcessMessageStringCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageNode">
+      <soap12:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessNativeMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ProcessMessageNodeCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMultiMessageNode">
+      <soap12:operation soapAction="http://www.opensolutions.com/CCM/CcmWebService/ProcessNativeMultiMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ProcessMultiMessageNodeCredentialsHeader" part="CredentialsHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CcmWebService">
+    <wsdl:port name="CcmWebServiceSoap" binding="tns:CcmWebServiceSoap">
+      <soap:address location="http://ind1dvwww02.corp.osinet.biz/testdev_3_4_3-ws/ccmwebservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CcmWebServiceSoap12" binding="tns:CcmWebServiceSoap12">
+      <soap12:address location="http://ind1dvwww02.corp.osinet.biz/testdev_3_4_3-ws/ccmwebservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

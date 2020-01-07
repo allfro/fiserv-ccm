@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7046AF1E-F2CC-4E8F-A092-4C4B2B91C6AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LMS.Connector.CCM.UnitTests</RootNamespace>
+    <AssemblyName>LMS.Connector.CCM.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Akcelerant.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Core\bin\Akcelerant.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Akcelerant.Core.Data.DTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Core.Data.DTO\bin\Akcelerant.Core.Data.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="Akcelerant.Core.Lookups, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Core.Lookups\bin\Debug\Akcelerant.Core.Lookups.dll</HintPath>
+    </Reference>
+    <Reference Include="Akcelerant.Lending.Data.DTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Lending.Data.DTO\bin\Akcelerant.Lending.Data.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="Akcelerant.Lending.Lookups, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Lending.Lookups\bin\Debug\Akcelerant.Lending.Lookups.dll</HintPath>
+    </Reference>
+    <Reference Include="Akcelerant.Lending.Lookups.Constants, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\Akcelerant.Lending.Lookups.Constants\bin\Debug\Akcelerant.Lending.Lookups.Constants.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="LMS.Connector.CCM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\LMS.Connector.CCM\bin\Debug\LMS.Connector.CCM.dll</HintPath>
+    </Reference>
+    <Reference Include="LMS.Core.HostValues.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\LMS.Core.HostValues.Utility\bin\Debug\LMS.Core.HostValues.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="LMS.Core.Rest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r20.00.00_Int\Dll\LMS.Core.Rest\bin\Debug\LMS.Core.Rest.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute, Version=4.2.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.4.2.1\lib\net46\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Behaviors\Rest\InquiryBehaviorTests.cs" />
+    <Compile Include="Behaviors\Rest\TestConnectionBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\AddAccountBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\AddAccountPartyRelationshipBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\AddCardBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\AddOrganizationBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\AddPersonBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\TestConnectionBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\UpdateAccountBehaviorTests.cs" />
+    <Compile Include="Behaviors\Soap\UpdatePersonBehaviorTests.cs" />
+    <Compile Include="Connected Services\CCMSoapWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\XmlSerializationExtensionsTests.cs" />
+    <Compile Include="Helpers\ExtensionsUnitTestAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxies\RestProxyTests.cs" />
+    <Compile Include="Repositories\RestRepositoryTests.cs" />
+    <Compile Include="Repositories\SoapRepositoryTests.cs" />
+    <Compile Include="Validation\ValidationManagerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\CCMSoapWebService\CcmWebService.wsdl" />
+    <None Include="Connected Services\CCMSoapWebService\LMS.Connector.CCM.UnitTests.CCMSoapWebService.GetPersonNameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CCMSoapWebService\LMS.Connector.CCM.UnitTests.CCMSoapWebService.ProcessMessageNodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CCMSoapWebService\LMS.Connector.CCM.UnitTests.CCMSoapWebService.ProcessMessageStringResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CCMSoapWebService\LMS.Connector.CCM.UnitTests.CCMSoapWebService.ProcessMultiMessageNodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CCMSoapWebService\LMS.Connector.CCM.UnitTests.CCMSoapWebService.ProcessResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CCMSoapWebService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CCMSoapWebService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CCMSoapWebService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CCMSoapWebService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\NSubstitute.Analyzers.CSharp.1.0.11\analyzers\dotnet\cs\NSubstitute.Analyzers.CSharp.dll" />
+    <Analyzer Include="..\packages\NSubstitute.Analyzers.CSharp.1.0.11\analyzers\dotnet\cs\NSubstitute.Analyzers.Shared.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
+</Project>
