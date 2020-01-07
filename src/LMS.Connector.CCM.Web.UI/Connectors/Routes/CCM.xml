@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<routes>
+  <route url="Connectors/CCM/Screens/{controller}.mvc/{action}"  area="Connectors/CCM/Screens" namespace="LMS.Connector.CCM.Web.Controllers">
+    <parameter name="action" default="index" type="STRING"/>
+  </route>
+  <route url="Connectors/CCM/{controller}.mvc/{action}"  area="Connectors/CCM" namespace="LMS.Connector.CCM.Web.Controllers">
+    <parameter name="action" default="index" type="STRING"/>
+  </route>
+</routes>

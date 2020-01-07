@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="LMS.Connector.CCM.Service.Api" CodeBehind="Api.svc.cs" %>

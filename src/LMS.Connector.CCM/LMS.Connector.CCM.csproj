@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\Soap\" />
+    <Folder Include="Dto\Rest\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Validation\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Proxies\" />
+  </ItemGroup>
+
+</Project>
