@@ -20,11 +20,11 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
         public void SerializeToXmlString_GivenADto_ShouldSerializeDtoInProperXmlFormat()
         {
             // ARRANGE
-            var app = GetApplication();
+            var app = GetApplication_NonAddOn();
             var applicant = GetApplicant();
             var userToken = "aBc123";
 
-            var dto = GetAddAccount(app, applicant, userToken);
+            var dto = GetAddAccountDto(app, applicant, userToken);
 
             // ACT
             var xml = dto.Message.SerializeToXmlString();
@@ -49,13 +49,13 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
         public void SerializeToXmlString_WhenApplicationHostValues_HasNoUserFields_SerializedXmlOutput_ShouldNotHaveUserFieldNodes()
         {
             // ARRANGE
-            var app = GetApplication();
+            var app = GetApplication_NonAddOn();
             app.HostValues.RemoveAll(hv => hv.Field1.Contains("AddAccount.Message.DataUpdate.Account.UserFields.UserField"));
 
             var applicant = GetApplicant();
             var userToken = "aBc123";
 
-            var dto = GetAddAccount(app, applicant, userToken);
+            var dto = GetAddAccountDto(app, applicant, userToken);
 
             var xml = dto.Message.SerializeToXmlString();
 
@@ -80,7 +80,7 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
             Assert.IsFalse(hasUserFieldNodes);
         }
 
-        public AddAccount GetAddAccount(Application app, Applicant applicant, string userToken)
+        public AddAccount GetAddAccountDto(Application app, Applicant applicant, string userToken)
         {
             var stubServiceRepo = Substitute.For<ISoapRepository>();
             var stubLmsRepo = Substitute.For<ILmsRepository>();
@@ -118,8 +118,12 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
             return account;
         }
 
-        public UpdateAccount GetUpdateAccount(Application app, Applicant applicant)
+        public UpdateAccount GetUpdateAccountDto(Application app, Applicant applicant, string userToken)
         {
+            var stubServiceRepo = Substitute.For<ISoapRepository>();
+            var stubLmsRepo = Substitute.For<ILmsRepository>();
+            var fakeBehavior = new UpdateAccountBehavior(app, userToken, stubServiceRepo, stubLmsRepo);
+
             var account = new UpdateAccount()
             {
                 Message = new Dto.Soap.Message()
@@ -130,26 +134,22 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
                         ProcessingCode = "ExternalUpdateRequest",
                         Source = "LoanOrigination",
                         UpdateAction = "Modify",
+                        UpdateTarget = "Account",
                         Account = new Account()
                         {
-                            AccountNumber = "9000000000007",
-                            LoanOfficerName = "Steve Higgs",
-                            AccountOpenDate = "2019-05-20",
-                            ProductName = "Test Gold",
-                            RateClass = "Promo Test Gold",
-                            CreditLimit = 40000.00m,
-                            TaxOwnerPartyId = "5597",
+                            LoanOfficerName = "Admin Admin",
+                            AccountOpenDate = "2019-07-25",
+                            ProductName = app.HostValues.Any(h => h.Field1.Equals("UpdateAccount.Message.DataUpdate.Account.ProductName")) ? string.Empty : null,
+                            RateClass = app.HostValues.Any(h => h.Field1.Equals("UpdateAccount.Message.DataUpdate.Account.RateClass")) ? string.Empty : null,
+                            PromotionalRateClass = app.HostValues.Any(h => h.Field1.Equals("UpdateAccount.Message.DataUpdate.Account.PromotionalRateClass")) ? string.Empty : null,
+                            PromotionalRateClassStartDate = app.HostValues.Any(h => h.Field1.Equals("UpdateAccount.Message.DataUpdate.Account.PromotionalRateClassStartDate")) ? string.Empty : null,
+                            PromotionalRateClassEndDate = app.HostValues.Any(h => h.Field1.Equals("UpdateAccount.Message.DataUpdate.Account.PromotionalRateClassEndDate")) ? string.Empty : null,
+                            CreditLimit = 10000.00m,
+                            TaxOwnerPartyId = "79396",
                             TaxOwnerPartyType = "Person",
-                            UserFields = new List<UserField>()
-                            {
-                                new UserField() { Name = "LoanOfficerType", Value = "HomeOffice" },
-                                new UserField() { Name = "OriginationMethod", Value = "IASystems" }
-                            },
+                            UserFields = fakeBehavior.GetUserFields(applicant)
                         },
-                        ModifiedFields = new ModifiedFields()
-                        {
-                            AccountField = "CreditLimit"
-                        }
+                        ModifiedFields = fakeBehavior.GetModifiedFields(applicant)
                     }
                 }
             };
@@ -157,7 +157,7 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
             return account;
         }
 
-        public Application GetApplication()
+        public Application GetApplication_NonAddOn()
         {
             var app = new Application()
             {
@@ -173,7 +173,32 @@ namespace LMS.Connector.CCM.UnitTests.Helpers
                     new HostValue("AddAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "RateCreditScore", "Rate Credit Score"),
                     new HostValue("AddAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "RateCreditScore", "00P02 Score"),
                     new HostValue("AddAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "TemenosApplicationNbr", "Temenos Application Number"),
-                    new HostValue("AddAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "TemenosApplicationNbr", "33333333"),
+                    new HostValue("AddAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "TemenosApplicationNbr", "33333333")
+                }
+            };
+
+            return app;
+        }
+
+        public Application GetApplication_AddOn()
+        {
+            var app = new Application()
+            {
+                ApplicationId = 123,
+                CreditCardNumber = "163276318",
+                HostValues = new List<HostValue>()
+                {
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.ProductName", "Visa Platinum Credit"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.RateClass", "A Credit Tier"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "CompetitorPayoffAmt", "Competitor Payoff Amt"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Value","CompetitorPayoffAmt", "LEVEL1-2000-9999"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "CompetitorPayoffAmt2", "Competitor Payoff Amt 2"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "CompetitorPayoffAmt2", "LEVEL2-2000-9999"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "RateCreditScore", "Rate Credit Score"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "RateCreditScore", "00P02 Score"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Name", "TemenosApplicationNbr", "Temenos Application Number"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField.Value", "TemenosApplicationNbr", "33333333"),
+                    new HostValue("UpdateAccount.Message.DataUpdate.ModifiedFields.AccountField", "RateClass")
                 }
             };
 

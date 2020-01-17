@@ -29,7 +29,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
         [SetUp]
         public void SetUp()
         {
-            _account = GetAddAccount();
+            _account = GetAddAccountDto();
             _app = GetApplication();
             _userToken = "aBc123";
         }
@@ -312,7 +312,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
             return credentialsHeader;
         }
 
-        public AddAccount GetAddAccount()
+        public AddAccount GetAddAccountDto()
         {
             var account = new AddAccount()
             {
@@ -346,7 +346,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
             return account;
         }
 
-        public AddAccount GetAddAccount_Organization()
+        public AddAccount GetAddAccountOrganizationDto()
         {
             var account = new AddAccount()
             {

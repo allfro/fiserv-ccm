@@ -28,7 +28,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
         [SetUp]
         public void SetUp()
         {
-            _person = GetAddPerson();
+            _person = GetAddPersonDto();
             _app = GetApplication();
             _userToken = "aBc123";
         }
@@ -130,7 +130,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
             return credentialsHeader;
         }
 
-        public AddPerson GetAddPerson()
+        public AddPerson GetAddPersonDto()
         {
             var addPerson = new AddPerson()
             {

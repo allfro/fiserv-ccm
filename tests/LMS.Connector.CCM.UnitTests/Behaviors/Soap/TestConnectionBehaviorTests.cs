@@ -27,8 +27,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
         [SetUp]
         public void SetUp()
         {
-
-            _person = GetUpdatePerson();
+            _person = GetUpdatePersonDto();
             _app = GetApplication();
             _userToken = "aBc123";
         }
@@ -124,7 +123,7 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
             return credentialsHeader;
         }
 
-        public UpdatePerson GetUpdatePerson()
+        public UpdatePerson GetUpdatePersonDto()
         {
             var person = new UpdatePerson()
             {
@@ -145,43 +144,21 @@ namespace LMS.Connector.CCM.UnitTests.Behaviors.Soap
                                 AddressLine1 = "123 Oak Court"
                             }
                         },
-                        ModifiedFields = new ModifiedFields()
+                        ModifiedFields = new List<ModifiedFields>()
                         {
-                            AddressField = "AddressLine1"
+                            new ModifiedFields()
+                            {
+                                AddressField = new List<string>()
+                                {
+                                    "AddressLine1"
+                                }
+                            }
                         }
                     }
                 }
             };
 
             return person;
-        }
-
-        public UpdateAccount GetUpdateAccount()
-        {
-            var account = new UpdateAccount()
-            {
-                Message = new Dto.Soap.Message()
-                {
-                    DataUpdate = new DataUpdate()
-                    {
-                        TraceNumber = "1",
-                        ProcessingCode = "ExternalUpdateRequest",
-                        Source = "LoanOrigination",
-                        UpdateAction = "Modify",
-                        Account = new Account()
-                        {
-                            AccountNumber = "99999999999999",
-                            CreditLimit = 1m
-                        },
-                        ModifiedFields = new ModifiedFields()
-                        {
-                            AccountField = "CreditLimit"
-                        }
-                    }
-                }
-            };
-
-            return account;
         }
 
         public MessageResponse GetMessageResponseSystemMalfunction()
