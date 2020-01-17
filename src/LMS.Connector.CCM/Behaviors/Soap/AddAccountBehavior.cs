@@ -217,9 +217,8 @@ namespace LMS.Connector.CCM.Behaviors.Soap
                         else if (hv.Field1.Contains("UserField.Value"))
                             userField.Value = hv.Value;
 
-                        /* Remove this host value from the entity since it was already manually added
-                         * and doesn't need to be "re-added" by the host value translator.
-                         */
+                        // Remove this host value from the application entity since it was already manually added
+                        // and doesn't need to be "re-added" by the host value translator.
                         _app.HostValues.Remove(hv);
                     }
 

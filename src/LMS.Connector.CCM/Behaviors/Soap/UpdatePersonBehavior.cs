@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Akcelerant.Core;
@@ -365,23 +366,171 @@ namespace LMS.Connector.CCM.Behaviors.Soap
             return addressType;
         }
 
-        private ModifiedFields GetModifiedFields(LmsPerson lmsPerson)
+        public List<ModifiedFields> GetModifiedFields(LmsPerson lmsPerson)
         {
+            List<ModifiedFields> modifiedFieldsList = null;
             ModifiedFields modifiedFields = null;
-            var personFieldHVExists = _app.HostValues.Any(h => h.Field1.Equals("UpdatePerson.Message.DataUpdate.ModifiedFields.PersonField"));
-            var addressFieldHVExists = _app.HostValues.Any(h => h.Field1.Equals("UpdatePerson.Message.DataUpdate.ModifiedFields.AddressField"));
-            var emailFieldHVExists = _app.HostValues.Any(h => h.Field1.Equals("UpdatePerson.Message.DataUpdate.ModifiedFields.EmailField"));
-            var phoneFieldHVExists = _app.HostValues.Any(h => h.Field1.Equals("UpdatePerson.Message.DataUpdate.ModifiedFields.PhoneField"));
 
-            if (personFieldHVExists || addressFieldHVExists || emailFieldHVExists || phoneFieldHVExists)
+            modifiedFields = GetPersonField(modifiedFields, lmsPerson);
+            if (modifiedFields != null)
             {
-                modifiedFields = new ModifiedFields()
+                (modifiedFieldsList ?? (modifiedFieldsList = new List<ModifiedFields>())).Add(modifiedFields);
+            }
+
+            modifiedFields = GetAddressField(modifiedFields, lmsPerson);
+            if (modifiedFields != null)
+            {
+                (modifiedFieldsList ?? (modifiedFieldsList = new List<ModifiedFields>())).Add(modifiedFields);
+            }
+
+            modifiedFields = GetEmailField(modifiedFields, lmsPerson);
+            if (modifiedFields != null)
+            {
+                (modifiedFieldsList ?? (modifiedFieldsList = new List<ModifiedFields>())).Add(modifiedFields);
+            }
+
+            modifiedFields = GetPhoneField(modifiedFields, lmsPerson);
+            if (modifiedFields != null)
+            {
+                (modifiedFieldsList ?? (modifiedFieldsList = new List<ModifiedFields>())).Add(modifiedFields);
+            }
+
+            return modifiedFieldsList;
+        }
+
+        public ModifiedFields GetPersonField(ModifiedFields modifiedFields, LmsPerson lmsPerson)
+        {
+            var personFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdatePerson.Message.DataUpdate.ModifiedFields.PersonField")
+            );
+
+            if (personFieldHVs.Any())
+            {
+                if (modifiedFields == null)
                 {
-                    PersonField = personFieldHVExists ? string.Empty : null,
-                    AddressField = addressFieldHVExists ? string.Empty : null,
-                    EmailField = emailFieldHVExists ? string.Empty : null,
-                    PhoneField = phoneFieldHVExists ? string.Empty : null
-                };
+                    modifiedFields = new ModifiedFields();
+                }
+
+                var personFields = new List<string>();
+
+                // Add PersonField host values to Dto
+                foreach (var personFieldHV in personFieldHVs.ToList())
+                {
+                    personFields.Add(personFieldHV.Value);
+
+                    // Remove this host value from the application entity since it was already manually added
+                    // and doesn't need to be "re-added" by the host value translator.
+                    _app.HostValues.Remove(personFieldHV);
+                }
+
+                modifiedFields.PersonField = personFields;
+            }
+
+            return modifiedFields;
+        }
+
+        /// <summary>
+        /// Manually creates a collection of AddressFields that will be added as a property of ModifiedFields.
+        /// </summary>
+        /// <param name="modifiedFields"></param>
+        /// <param name="lmsPerson"></param>
+        /// <remarks>
+        /// This method already has access to application-level host values.
+        /// Optionally giving it the ability to access applicant-level or authorized user-level host values.
+        /// </remarks>
+        /// <returns></returns>
+        public ModifiedFields GetAddressField(ModifiedFields modifiedFields, LmsPerson lmsPerson)
+        {
+            var addressFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdatePerson.Message.DataUpdate.ModifiedFields.AddressField")
+            );
+
+            if (addressFieldHVs.Any())
+            {
+                if (modifiedFields == null)
+                {
+                    modifiedFields = new ModifiedFields();
+                }
+
+                var addressFields = new List<string>();
+
+                // Add AddressField host values to Dto
+                foreach (var addressFieldHV in addressFieldHVs.ToList())
+                {
+                    addressFields.Add(addressFieldHV.Value);
+
+                    // Remove this host value from the application entity since it was already manually added
+                    // and doesn't need to be "re-added" by the host value translator.
+                    _app.HostValues.Remove(addressFieldHV);
+                }
+
+                modifiedFields.AddressField = addressFields;
+            }
+
+            return modifiedFields;
+        }
+
+        public ModifiedFields GetEmailField(ModifiedFields modifiedFields, LmsPerson lmsPerson)
+        {
+            var emailFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdatePerson.Message.DataUpdate.ModifiedFields.EmailField")
+            );
+
+            if (emailFieldHVs.Any())
+            {
+                if (modifiedFields == null)
+                {
+                    modifiedFields = new ModifiedFields();
+                }
+
+                var emailFields = new List<string>();
+
+                // Add EmailField host values to Dto
+                foreach (var emailFieldHV in emailFieldHVs.ToList())
+                {
+                    emailFields.Add(emailFieldHV.Value);
+
+                    // Remove this host value from the application entity since it was already manually added
+                    // and doesn't need to be "re-added" by the host value translator.
+                    _app.HostValues.Remove(emailFieldHV);
+                }
+
+                modifiedFields.EmailField = emailFields;
+            }
+
+            return modifiedFields;
+        }
+
+        public ModifiedFields GetPhoneField(ModifiedFields modifiedFields, LmsPerson lmsPerson)
+        {
+            var addressFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdatePerson.Message.DataUpdate.ModifiedFields.AddressField")
+            );
+
+            if (addressFieldHVs.Any())
+            {
+                if (modifiedFields == null)
+                {
+                    modifiedFields = new ModifiedFields();
+                }
+
+                var addressFields = new List<string>();
+
+                // Add AddressField host values to Dto
+                foreach (var addressFieldHV in addressFieldHVs.ToList())
+                {
+                    addressFields.Add(addressFieldHV.Value);
+
+                    // Remove this host value from the application entity since it was already manually added
+                    // and doesn't need to be "re-added" by the host value translator.
+                    _app.HostValues.Remove(addressFieldHV);
+                }
+
+                modifiedFields.AddressField = addressFields;
             }
 
             return modifiedFields;

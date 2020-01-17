@@ -9,7 +9,7 @@
         public string MasterAccountNumber { get; set; }
         public string ProductName { get; set; }
         public string AccountStatus { get; set; }
-        public string PartName { get; set; }
+        public string PartyName { get; set; }
         public string AccountRelationshipType { get; set; }
         public bool IsTaxOwner { get; set; }
         public string CardId { get; set; }

@@ -43,6 +43,14 @@ namespace LMS.Connector.CCM.Behaviors.Soap
             _soapRepository = serviceRepository;
         }
 
+        public UpdateAccountBehavior(Application app, string userToken, ISoapRepository serviceRepository, ILmsRepository lmsRepository)
+        {
+            _app = app;
+            _userToken = userToken;
+            _soapRepository = serviceRepository;
+            _lmsRepository = lmsRepository;
+        }
+
         #region "Interface implementations"
 
         public MessageResponse MessageResponse
@@ -168,7 +176,7 @@ namespace LMS.Connector.CCM.Behaviors.Soap
 
         /// <summary>
         /// Manually creates a collection of UserFields, if needed, from entity host values.
-        /// When a host value is added to the UserField collection, remove that host value from the entity from which it was defined.
+        /// When a host value is added to the UserFields collection, remove that host value from the entity from which it was defined.
         /// </summary>
         /// <param name="applicant"></param>
         /// <remarks>
@@ -180,7 +188,10 @@ namespace LMS.Connector.CCM.Behaviors.Soap
         {
             List<UserField> userFieldList = null;
 
-            var userFieldHVs = _app.HostValues.Where(hv => hv.Field1.Contains("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField"));
+            var userFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdateAccount.Message.DataUpdate.Account.UserFields.UserField")
+            );
             var userFieldHVGs = userFieldHVs.GroupBy(g => g.Field2);
 
             if (userFieldHVGs.Any())
@@ -198,9 +209,8 @@ namespace LMS.Connector.CCM.Behaviors.Soap
                         else if (hv.Field1.Contains("UserField.Value"))
                             userField.Value = hv.Value;
 
-                        /* Remove this host value from the entity since it was already manually added
-                         * and doesn't need to be "re-added" by the host value translator.
-                         */
+                        // Remove this host value from the application entity since it was already manually added
+                        // and doesn't need to be "re-added" by the host value translator.
                         _app.HostValues.Remove(hv);
                     }
 
@@ -211,12 +221,68 @@ namespace LMS.Connector.CCM.Behaviors.Soap
             return userFieldList;
         }
 
-        private ModifiedFields GetModifiedFields(Applicant primaryApplicant)
+        /// <summary>
+        /// Manually creates a collection of ModifieldFields.
+        /// </summary>
+        /// <param name="primaryApplicant"></param>
+        /// <remarks>
+        /// ModifiedFields is needed for all UpdateAccount calls.
+        /// Optionally giving it the ability to access applicant-level host values.
+        /// </remarks>
+        /// <returns></returns>
+        public List<ModifiedFields> GetModifiedFields(Applicant primaryApplicant)
         {
-            var modifiedFields = new ModifiedFields()
+            List<ModifiedFields> modifiedFieldsList = new List<ModifiedFields>();
+
+            ModifiedFields modifiedFieldsAccountFields = new ModifiedFields();
+            modifiedFieldsAccountFields = GetAccountField(modifiedFieldsAccountFields, primaryApplicant);
+            modifiedFieldsList.Add(modifiedFieldsAccountFields);
+
+            return modifiedFieldsList;
+        }
+
+        /// <summary>
+        /// Manually creates a collection of AccountFields that will be added as a property of ModifiedFields.
+        /// Ensures that "CreditLimit" AccountField is always added.
+        /// When a host value is added to the Account collection, remove that host value from the application entity from which it was defined.
+        /// </summary>
+        /// <param name="modifiedFields"></param>
+        /// <param name="primaryApplicant"></param>
+        /// <remarks>
+        /// This method already has access to application-level host values.
+        /// Optionally giving it the ability to access applicant-level host values.
+        /// </remarks>
+        /// <returns></returns>
+        public ModifiedFields GetAccountField(ModifiedFields modifiedFields, Applicant primaryApplicant)
+        {
+            var accountFieldHVs = _app.HostValues.Where
+            (
+                hv => hv.Field1.Contains("UpdateAccount.Message.DataUpdate.ModifiedFields.AccountField")
+            );
+
+            if (accountFieldHVs.Any())
             {
-                AccountField = "CreditLimit"
-            };
+                var accountFields = new List<string>();
+
+                // Add AccountField host values to Dto
+                foreach (var accountFieldHV in accountFieldHVs.ToList())
+                {
+                    accountFields.Add(accountFieldHV.Value);
+
+                    // Remove this host value from the application entity since it was already manually added
+                    // and doesn't need to be "re-added" by the host value translator.
+                    _app.HostValues.Remove(accountFieldHV);
+                }
+
+                modifiedFields.AccountField = accountFields;
+            }
+
+            // Determine if direct-mapped UpdateAccount.Message.DataUpdate.ModifiedFields.AccountField = CreditLimit needs to be added
+            var containsAccountFieldCreditLimit = modifiedFields.AccountField?.Contains("CreditLimit");
+            if (!containsAccountFieldCreditLimit.GetValueOrDefault())
+            {
+                (modifiedFields.AccountField ?? (modifiedFields.AccountField = new List<string>())).Add("CreditLimit");
+            }
 
             return modifiedFields;
         }

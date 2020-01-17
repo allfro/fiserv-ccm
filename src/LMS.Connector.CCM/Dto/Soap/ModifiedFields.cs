@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace LMS.Connector.CCM.Dto.Soap
@@ -17,7 +18,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If an AccountField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 1)]
-        public string AccountField { get; set; }
+        public List<string> AccountField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -30,7 +31,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If a CardField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 2)]
-        public string CardField { get; set; }
+        public List<string> CardField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -42,7 +43,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If an AccountPartyRelationshipField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 3)]
-        public string AccountPartyRelationshipField { get; set; }
+        public List<string> AccountPartyRelationshipField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -55,7 +56,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If a PersonField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 4)]
-        public string PersonField { get; set; }
+        public List<string> PersonField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -68,7 +69,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If an OrganizationField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 5)]
-        public string OrganizationField { get; set; }
+        public List<string> OrganizationField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -80,7 +81,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If an AddressField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 6)]
-        public string AddressField { get; set; }
+        public List<string> AddressField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -92,7 +93,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If an EmailField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 7)]
-        public string EmailField { get; set; }
+        public List<string> EmailField { get; set; }
 
         /// <summary>
         /// Indicates field should be modified.
@@ -104,7 +105,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         /// If a PhoneField tag for a conditionally required tag is included and then the corresponding tag is empty or missing, CCM will not process the message and will return an error.
         /// </remarks>
         [XmlElement(Order = 8)]
-        public string PhoneField { get; set; }
+        public List<string> PhoneField { get; set; }
 
         [XmlIgnore]
         public override string HostValueParentNode

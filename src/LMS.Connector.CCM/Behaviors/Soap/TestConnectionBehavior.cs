@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Akcelerant.Core;
 using Akcelerant.Core.Client.Tracing;
@@ -222,12 +223,42 @@ namespace LMS.Connector.CCM.Behaviors.Soap
             return primaryAddress;
         }
 
-        private ModifiedFields GetModifiedFields(LmsPerson lmsPerson)
+        /// <summary>
+        /// Manually creates a collection of ModifieldFields.
+        /// </summary>
+        /// <param name="lmsPerson"></param>
+        /// <remarks>
+        /// Optionally giving it the ability to access applicant-level host values.
+        /// </remarks>
+        /// <returns></returns>
+        public List<ModifiedFields> GetModifiedFields(LmsPerson lmsPerson)
         {
-            var modifiedFields = new ModifiedFields()
+            List<ModifiedFields> modifiedFieldsList = new List<ModifiedFields>();
+
+            ModifiedFields modifiedFields = new ModifiedFields()
             {
-                AddressField = ADDRESS_FIELD
+                AddressField = new List<string>()
             };
+            modifiedFields = GetAddressField(modifiedFields, lmsPerson);
+
+            modifiedFieldsList.Add(modifiedFields);
+
+            return modifiedFieldsList;
+        }
+
+        /// <summary>
+        /// Manually creates a collection of AddressFields that will be added as a property of ModifiedFields.
+        /// </summary>
+        /// <param name="modifiedFields"></param>
+        /// <param name="lmsPerson"></param>
+        /// <remarks>
+        /// This method already has access to application-level host values.
+        /// Optionally giving it the ability to access applicant-level or authorized user-level host values.
+        /// </remarks>
+        /// <returns></returns>
+        public static ModifiedFields GetAddressField(ModifiedFields modifiedFields, LmsPerson lmsPerson)
+        {
+            modifiedFields.AddressField.Add(ADDRESS_FIELD);
 
             return modifiedFields;
         }

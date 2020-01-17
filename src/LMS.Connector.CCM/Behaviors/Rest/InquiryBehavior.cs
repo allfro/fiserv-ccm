@@ -109,10 +109,10 @@ namespace LMS.Connector.CCM.Behaviors.Rest
                 if (_relationshipInfos?.Count > 0)
                 {
                     int i = 0;
-                    tr.Log("Iterating through _relationshipInfos to determine if party has an account in CCM (i.e. relationshipInfo.AccountNumber == _app.CreditCardNumber)");
+                    tr.Log($"Iterating through _relationshipInfos to determine if party has an account in CCM (i.e. relationshipInfo[i].AccountNumber == _app.CreditCardNumber <{_app.CreditCardNumber}>)");
                     foreach (var relationshipInfo in _relationshipInfos)
                     {
-                        tr.Log($"_relationshipInfos[{i}]");
+                        tr.Log($"_relationshipInfos[{i}].AccountNumber = {relationshipInfo.AccountNumber}");
                         if (relationshipInfo.AccountNumber == _app.CreditCardNumber)
                         {
                             _errorMessage = "Found";

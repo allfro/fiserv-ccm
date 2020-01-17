@@ -78,7 +78,7 @@ namespace LMS.Connector.CCM.Dto.Soap
         public Organization Organization { get; set; }
 
         [XmlElement(Order = 11)]
-        public ModifiedFields ModifiedFields { get; set; }
+        public List<ModifiedFields> ModifiedFields { get; set; }
 
         [XmlIgnore]
         public override string HostValueParentNode
